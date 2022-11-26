@@ -1,10 +1,10 @@
 package pl.todo.hello;
 
 import org.junit.Test;
-import pl.todo.hello.HelloService;
 import pl.todo.lang.Lang;
 import pl.todo.lang.LangRepository;
 
+import java.net.http.HttpRequest;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -20,7 +20,7 @@ public class HelloServiceTest {
         var mockRepository = alwaysReturningHelloRepository();
         HelloService SUT = new HelloService(mockRepository);
         //when
-        var result = SUT.prepareGreeting(null, "-1");
+        var result = SUT.prepareGreeting(null, -1);
         //then
         assertEquals(WELCOME + " " + HelloService.FALLBACK_NAME + "!",result);
     }
@@ -32,7 +32,7 @@ public class HelloServiceTest {
         HelloService SUT = new HelloService(mockRepository);
         String name = "test";
         //when
-        var result = SUT.prepareGreeting(name,"-1");
+        var result = SUT.prepareGreeting(name,-1);
         //then
         assertEquals(WELCOME + " " + name + "!",result);
     }
@@ -47,17 +47,17 @@ public class HelloServiceTest {
         //then
         assertEquals(FALBACK_ID_WELCOME + " " + HelloService.FALLBACK_NAME + "!",result);
     }
-    @Test
-    public void test_prepareGreeting_textLang_returnsGreetingWithFallbackIdLang() throws Exception{
-        //given
-        var mockRepository = fallbackLangIdRepository();
-        HelloService SUT = new HelloService(mockRepository);
-        String name = "test";
-        //when
-        var result = SUT.prepareGreeting(null,"abc");
-        //then
-        assertEquals(FALBACK_ID_WELCOME + " " + HelloService.FALLBACK_NAME + "!",result);
-    }
+//    @Test
+//    public void test_prepareGreeting_textLang_returnsGreetingWithFallbackIdLang() throws Exception{
+//        //given
+//        var mockRepository = fallbackLangIdRepository();
+//        HelloService SUT = new HelloService(mockRepository);
+//        String name = "test";
+//        //when
+//        var result = SUT.prepareGreeting(null,"abc");
+//        //then
+//        assertEquals(FALBACK_ID_WELCOME + " " + HelloService.FALLBACK_NAME + "!",result);
+//    }
     @Test
     public void test_prepareGreeting_nonExistingLang_returnsGreetingWithFallbackLang() throws Exception{
         //given

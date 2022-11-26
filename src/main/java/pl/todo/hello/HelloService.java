@@ -23,14 +23,8 @@ class HelloService {
         this.repository = repository;
     }
 
-    public String prepareGreeting(String name, String lang) {
-        Integer langId;
-        try {
-            langId = Optional.ofNullable(lang).map(Integer::valueOf).orElse(FALLBACK_LANG.getId());
-        } catch (NumberFormatException e) {
-            logger.warn("Non-numeric language id used: " + lang);
-            langId = FALLBACK_LANG.getId();
-        }
+    public String prepareGreeting(String name, Integer langId) {
+        langId = Optional.ofNullable(langId).orElse(FALLBACK_LANG.getId());
         var welcomeMsg = repository.finfById(langId).orElse(FALLBACK_LANG).getWelcomeMsg();
         var nameToWelcome = Optional.ofNullable(name).orElse(FALLBACK_NAME);
         return welcomeMsg + " " + nameToWelcome + "!";
